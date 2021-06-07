@@ -1,0 +1,27 @@
+root@controlplane:~/Helm-Charts# helm install mynginx  mynginxchart 
+NAME: mynginx
+LAST DEPLOYED: Mon Jun  7 17:40:10 2021
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services mynginx-chart)
+  export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+root@controlplane:~/Helm-Charts# export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services mynginx-chart)
+root@controlplane:~/Helm-Charts#   export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+root@controlplane:~/Helm-Charts#  echo http://$NODE_IP:$NODE_PORT
+http://10.10.33.3:30567
+===================================================================================
+
+root@controlplane:~/Helm-Charts# kubectl get svc,deployment  
+NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/kubernetes      ClusterIP   10.96.0.1       <none>        443/TCP        14m
+service/mynginx-chart   NodePort    10.107.191.75   <none>        80:30567/TCP   2m55s
+
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mynginx-chart   1/1     1            1           2m55s
+
+
+
